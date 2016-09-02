@@ -27,12 +27,21 @@ dicta=makeDB("CoveredKeys")
 conn= boto.connect_s3(anon=True,debug=2)
 bucket = conn.get_bucket('commoncrawl')
 list1=bucket.list(prefix="crawl-data/CC-MAIN")
+def get_or_make_db(filename):
+    import os
+    if os.path.isfile(filename):
+        pass
+    else:
+        f=open(filename,'wb+')
+        f.close
+    return os.path.realpath(filename)
 #list1=bucket.get_all_keys(maxkeys=0)
+lookup=raw_input("Enter Lookup")
 for key in list1:
     #print key
     #print dir(key)
     #print key.name
-    if "wet" in key.name:
+    if "wet" in key.name and lookup in key.name:
         print key
         if key.name in dicta:
             continue
@@ -44,7 +53,7 @@ for key in list1:
                 #print r
                 #raw_input()
                 domain=r[0].split("@")[1]
-                table.insert(dict(domain=unidecode(domain),email=unidecode(r[0])))
+                table.insert(dict(domain=unidecode(domain),email=unidecode(r[0]),text=line))
         dicta[key.name]=1
     else:
         print "wet not there"
