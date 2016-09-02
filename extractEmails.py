@@ -53,7 +53,7 @@ for key in list1:
                 #print r
                 #raw_input()
                 domain=r[0].split("@")[1]
-                table.insert(dict(domain=unidecode(domain),email=unidecode(r[0]),text=line))
+                table.insert(dict(domain=unidecode(domain),email=unidecode(r[0]),text=l))
         dicta[key.name]=1
     else:
         print "wet not there"
