@@ -7,6 +7,8 @@ import boto
 import re
 import dataset
 from unidecode import unidecode
+import time
+
 def get_or_make_db(filename):
     import os
     if os.path.isfile(filename):
@@ -45,15 +47,31 @@ for key in list1:
         print key
         if key.name in dicta:
             continue
-        for l in GzipStreamFile(key):
-            #print l
-            result = prog.findall(l)
-            for r in result:
+        try:
+            for l in GzipStreamFile(key):
                 #print l
-                #print r
-                #raw_input()
-                domain=r[0].split("@")[1]
-                table.insert(dict(domain=unidecode(domain),email=unidecode(r[0]),text=unidecode(l)))
+                result = prog.findall(l)
+                for r in result:
+                    #print l
+                    #print r
+                    #raw_input()
+                    domain=r[0].split("@")[1]
+                    table.insert(dict(domain=unidecode(domain),email=unidecode(r[0]),text=unidecode(l)))
+        except:
+            time.sleep(60)
+            conn= boto.connect_s3(anon=True,debug=2)
+            bucket = conn.get_bucket('commoncrawl')
+            list1=bucket.list(prefix="crawl-data/CC-MAIN")
+            for l in GzipStreamFile(key):
+                #print l
+                result = prog.findall(l)
+                for r in result:
+                    #print l
+                    #print r
+                    #raw_input()
+                    domain=r[0].split("@")[1]
+                    table.insert(dict(domain=unidecode(domain),email=unidecode(r[0]),text=unidecode(l)))
+            
         dicta[key.name]=1
     else:
         print "wet not there"
