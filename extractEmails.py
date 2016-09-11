@@ -61,7 +61,7 @@ for key in list1:
             time.sleep(60)
             conn= boto.connect_s3(anon=True,debug=2)
             bucket = conn.get_bucket('commoncrawl')
-            list1=bucket.list(prefix="crawl-data/CC-MAIN")
+            #list1=bucket.list(prefix="crawl-data/CC-MAIN")
             for l in GzipStreamFile(key):
                 #print l
                 result = prog.findall(l)
