@@ -32,10 +32,10 @@ thefile=open("keys.txt","wb")
 #list1=bucket.get_all_keys(maxkeys=0)
 for key in list1:
     print dir(key)
-    
-    if !1:
-        for lindex,l in enumerate(GzipStreamFile(key)):
-            print l
-            raw_input()
+    print key    
+    # if !1:
+    #     for lindex,l in enumerate(GzipStreamFile(key)):
+    #         print l
+    #         raw_input()
             
 
