@@ -31,8 +31,9 @@ list1=bucket.list(prefix="crawl-data/CC-NEWS")
 thefile=open("keys.txt","wb")
 #list1=bucket.get_all_keys(maxkeys=0)
 for key in list1:
-    thefile.write(key)
-    if 1:
+    print dir(key)
+    
+    if !1:
         for lindex,l in enumerate(GzipStreamFile(key)):
             print l
             raw_input()
